@@ -17,9 +17,9 @@ public class Trainer : Shared.Core.Entity
     public DateReason? Blocked { get; private set; }
     public DateReason? Activated { get; private set; }
     public DateOnly DateOfBirth { get; init; }
-    public string Password { get; init; }
+    public PasswordHash Password { get; private set; }
     
-    public Trainer(Name firstName, Name lastName, PhoneNumber phoneNumber, Mail mailAddress, Address address, TimeProvider timeProvider, DateOnly dateOfBirth, string password)
+    public Trainer(Name firstName, Name lastName, PhoneNumber phoneNumber, Mail mailAddress, Address address, DateOnly dateOfBirth, TimeProvider timeProvider)
     {
         Id = new (Guid.NewGuid());
         FirstName = firstName;
@@ -28,12 +28,14 @@ public class Trainer : Shared.Core.Entity
         MailAddress = mailAddress;
         Address = address;
         DateOfBirth = dateOfBirth;
-        Password = password;
+
         CreatedAt = timeProvider.GetUtcNow();
         
         Update(timeProvider);
         RaiseUp(new TrainerCreated(Id));
     }
+
+    public void SetPassword(PasswordHash hash) => Password = hash;
     
     private void Update(TimeProvider timeProvider) => UpdateAt = timeProvider.GetUtcNow();
 
