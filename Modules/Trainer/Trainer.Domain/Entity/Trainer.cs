@@ -1,4 +1,5 @@
 using Shared.Core;
+using Trainer.Domain.DomainEvents;
 using Trainer.Domain.ValueObject;
 
 namespace Trainer.Domain.Entity;
@@ -13,29 +14,35 @@ public class Trainer : Shared.Core.Entity
     public DateTimeOffset CreatedAt { get; init; }
     public DateTimeOffset UpdateAt { get; private set; }
     public DateTimeOffset LastLogin { get; private set; }
-    public Blocked? Blocked { get; private set; }
+    public DateReason? Blocked { get; private set; }
+    public DateReason? Activated { get; private set; }
     public DateOnly DateOfBirth { get; init; }
     public string Password { get; init; }
     
-    public Trainer(Name firstName, Name lastName, PhoneNumber phoneNumber, Mail mailAddress, Address address, DateTimeOffset createdAt, DateTimeOffset updateAt, DateOnly dateOfBirth, string password)
+    public Trainer(Name firstName, Name lastName, PhoneNumber phoneNumber, Mail mailAddress, Address address, TimeProvider timeProvider, DateOnly dateOfBirth, string password)
     {
-        Id = new Id(Guid.NewGuid());
+        Id = new (Guid.NewGuid());
         FirstName = firstName;
         LastName = lastName;
         PhoneNumber = phoneNumber;
         MailAddress = mailAddress;
         Address = address;
-        CreatedAt = createdAt;
-        UpdateAt = updateAt;
         DateOfBirth = dateOfBirth;
         Password = password;
+        CreatedAt = timeProvider.GetUtcNow();
+        
+        Update(timeProvider);
+        RaiseUp(new TrainerCreated(Id));
     }
-
+    
     private void Update(TimeProvider timeProvider) => UpdateAt = timeProvider.GetUtcNow();
 
+    public void Activate(TimeProvider timeProvider) =>
+        Activated = new(timeProvider.GetUtcNow(), "Account was activated");
+    
     public void Block(TimeProvider timeProvider, string reason)
     {
-        Blocked = new Blocked(timeProvider.GetLocalNow(), reason);
+        Blocked = new DateReason(timeProvider.GetUtcNow(), reason);
         Update(timeProvider);
     }
 
