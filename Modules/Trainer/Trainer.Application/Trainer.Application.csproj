@@ -16,4 +16,8 @@
       <ProjectReference Include="..\Trainer.Domain\Trainer.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Command\LoginTrainer\" />
+    </ItemGroup>
+
 </Project>
