@@ -14,7 +14,7 @@ public class LoginUserRequestHandler(IUserRepository repository, ILogger<LoginUs
     public async Task<JwtTokenDto> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
         var user = await repository.GetByEmail(request.Email, cancellationToken);
-
+        
         await Task.Delay(Random.Shared.Next(300, 500), cancellationToken: cancellationToken);
         
         if (user is null)
@@ -35,6 +35,12 @@ public class LoginUserRequestHandler(IUserRepository repository, ILogger<LoginUs
         {
             logger.LogError("User with id {id} has no Activated account", user.Id.Value);
             throw new UserNotActivated(user.Id.Value);
+        }
+        
+        if(user.Blocked is not null)
+        {
+            logger.LogError("User with id {id} has blocked account reason: {reason}", user.Id.Value, user.Blocked.Reason);
+            throw new UserBlockedException(user.Id.Value);
         }
         
         var jwt = jsonWebTokenManager.CreateToken(user.Id, user.MailAddress.Value, user.Role.Value, user.Claims.Select(x=>x.Value).ToList());
