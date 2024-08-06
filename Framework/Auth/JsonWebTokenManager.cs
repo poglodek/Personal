@@ -10,22 +10,14 @@ internal class JsonWebTokenManager(AuthOptions options, AuthExtensions.SecurityK
     private readonly SigningCredentials _signingCredentials = new SigningCredentials(key.Key, SecurityAlgorithms.HmacSha256);
     private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new();
 
-    public JwtTokenDto CreateToken(Guid userId, string email, string role, IDictionary<string,string> claims = null)
+    public JwtTokenDto CreateToken(Guid userId, string email, string role, List<string> claims = null)
     {
-        if (claims is null)
-        {
-            claims = new Dictionary<string, string>(0);
-        }
-
         var jwtClaims = new List<Claim>(claims.Count);
 
 
         if (claims.Any())
         {
-            foreach (var claim in claims)
-            {
-                jwtClaims.Add(new Claim(claim.Key, claim.Value));
-            }
+            jwtClaims.Add(new Claim("claims", string.Join(',',claims)));
         }
         
         jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Email, email));
@@ -46,11 +38,13 @@ internal class JsonWebTokenManager(AuthOptions options, AuthExtensions.SecurityK
 
         return new JwtTokenDto
         {
-            JWT = token,
+            Jwt = token,
             ExpiresInHours = options.ExpiresInHours,
             UserId = userId,
             Role = role,
+            Claims = claims
         };
 
     }
+    
 }
