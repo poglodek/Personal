@@ -17,7 +17,7 @@ internal class JsonWebTokenManager(AuthOptions options, AuthExtensions.SecurityK
 
         if (claims.Any())
         {
-            jwtClaims.Add(new Claim("claims", string.Join(',',claims)));
+            jwtClaims.Add(new Claim(Const.Claims, string.Join(',',claims)));
         }
         
         jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Email, email));

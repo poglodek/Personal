@@ -19,8 +19,8 @@ public static class Extensions
             {
                 throw new ArgumentNullException(nameof(connectionStringName));
             }
-
             x.UseNpgsql(connectionString);
+            
         });
 
         serviceCollection.AddScoped<IUnitOfWork, T>();

@@ -16,6 +16,7 @@ public static class AuthExtensions
         var options = configuration.GetSection("auth").Get<AuthOptions>();
         var key = ReturnSecurityKeyFromConfiguration(options);
 
+        serviceCollection.AddAuthorization();
         serviceCollection.AddSingleton(_ => options);
         
         serviceCollection.AddAuthentication(authenticationOptions =>

@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 namespace ApiShared;
 
@@ -43,7 +44,11 @@ public static class ModuleInstallation
         }
 
         _logger.LogInformation("Services installed.");
-       
+
+        builder.Services.AddScoped<BaseExceptionMiddleware>();
+        
+        builder.Services.AddHttpContextAccessor();
+        
         return builder;
     }
 
@@ -93,7 +98,7 @@ public static class ModuleInstallation
         var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
         var locations = assemblies.Where(x => !x.IsDynamic).Select(x => x.Location).ToArray();
         var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll")
-            .Where(x => !locations.Contains(x, StringComparer.InvariantCultureIgnoreCase))
+            .Where(x => !locations.Contains(x, StringComparer.InvariantCultureIgnoreCase) && !x.Contains("System.") && !x.Contains("Microsoft."))
             .ToList();
         files.ForEach(x => assemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(x))));
         return assemblies;
@@ -104,7 +109,7 @@ public static class ModuleInstallation
         var configPathFile = GetConfigPathFile(module);
         if (!File.Exists(configPathFile))
         {
-            throw new FileNotFoundException($"Configuration file for module {module.ModuleName} not found.");
+            throw new FileNotFoundException($"Configuration file for module '{module.ModuleName}' not found.");
         } 
             
         return File.ReadAllText(configPathFile);
@@ -160,6 +165,8 @@ public static class ModuleInstallation
         }
 
         _logger.LogInformation("Modules installed complete!");
+
+        builder.UseMiddleware<BaseExceptionMiddleware>();
         
         
         return builder;

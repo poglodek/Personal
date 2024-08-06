@@ -1,11 +1,6 @@
 namespace Shared.Exceptions;
 
-public abstract class BaseException : Exception
+public abstract class BaseException(string message) : Exception(message)
 {
-    protected BaseException(string message) : base(message)
-    {
-        
-    }
-
     public abstract string Message { get;}
 }

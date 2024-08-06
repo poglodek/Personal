@@ -7,6 +7,7 @@ public record Claim(string Value)
         new("User"),
         new("ViewWorkout"),
         new("ViewExercise"),
+        new("GetUserById"),
     };
     
     //Add claims from default user claims
