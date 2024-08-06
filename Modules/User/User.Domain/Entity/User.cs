@@ -70,7 +70,7 @@ public class User : Shared.Core.Entity
         Update(timeProvider);
     }
     
-    public void SetDefaultTrainerForUser(TimeProvider timeProvider)
+    public void SetDefaultClaimsForTrainer(TimeProvider timeProvider)
     {
         Claims = Claim.DefaultTrainerClaims.ToHashSet();
         Update(timeProvider);
@@ -85,7 +85,10 @@ public class User : Shared.Core.Entity
         }
         Update(timeProvider);
     }
-    
-    
 
+
+    public void SetLastLogin(TimeProvider timeProvider)
+    {
+        LastLogin = timeProvider.GetUtcNow();
+    }
 }

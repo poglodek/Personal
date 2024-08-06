@@ -9,7 +9,7 @@ using User.Application.Repositories;
 namespace User.Application.Command.LoginUser;
 
 public class LoginUserRequestHandler(IUserRepository repository, ILogger<LoginUserRequestHandler> logger, 
-    IPasswordHasher<Domain.Entity.User> passwordHasher,IJsonWebTokenManager jsonWebTokenManager) : IRequestHandler<LoginUserRequest, JwtTokenDto>
+    IPasswordHasher<Domain.Entity.User> passwordHasher,IJsonWebTokenManager jsonWebTokenManager, TimeProvider timeProvider) : IRequestHandler<LoginUserRequest, JwtTokenDto>
 {
     public async Task<JwtTokenDto> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
@@ -23,15 +23,24 @@ public class LoginUserRequestHandler(IUserRepository repository, ILogger<LoginUs
             throw new UserNotFoundException(request.Email);
         }
         
-        
         var result = passwordHasher.VerifyHashedPassword(user, user.Password.Hash, request.Password + user.Password.Salt);
 
         if (result == PasswordVerificationResult.Failed)
         {
-            logger.LogError("User with email {Email} has bad password", request.Email);
+            logger.LogError("User with email {Email} typed bad password", request.Email);
             throw new UserNotFoundException(request.Email);
         }
         
-        return jsonWebTokenManager.CreateToken(user.Id, user.MailAddress.Value, user.Role.Value, user.Claims.Select(x=>x.Value).ToList());
+        if (user.Activated is null)
+        {
+            logger.LogError("User with id {id} has no Activated account", user.Id.Value);
+            throw new UserNotActivated(user.Id.Value);
+        }
+        
+        var jwt = jsonWebTokenManager.CreateToken(user.Id, user.MailAddress.Value, user.Role.Value, user.Claims.Select(x=>x.Value).ToList());
+
+        user.SetLastLogin(timeProvider);
+        
+        return jwt;
     }
 }
