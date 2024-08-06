@@ -13,7 +13,7 @@ internal class UserRepository(UserDbContext userDbContext) : IUserRepository
 
     public Task<Domain.Entity.User?> GetById(Guid id, CancellationToken cancellationToken = default)
     {
-       return userDbContext.Users.FirstOrDefaultAsync(x=> x.Id.Value == id, cancellationToken);
+       return userDbContext.Users.FirstOrDefaultAsync(x=> x.Id == id, cancellationToken);
     }
 
     public Task<Domain.Entity.User?> GetByEmail(string email, CancellationToken cancellationToken = default)

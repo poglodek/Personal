@@ -21,11 +21,12 @@ public class User : Shared.Core.Entity
     public PasswordHash Password { get; private set; }
     public HashSet<Claim> Claims { get; private set; } = [];
 
+    //For EF
     private User(){}
     
     public User(Name firstName, Name lastName, PhoneNumber phoneNumber, Mail mailAddress, Address address, DateOnly dateOfBirth, TimeProvider timeProvider)
     {
-        Id = new (Guid.NewGuid());
+        Id = Guid.NewGuid();
         FirstName = firstName;
         LastName = lastName;
         PhoneNumber = phoneNumber;

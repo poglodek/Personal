@@ -7,18 +7,18 @@ using User.Domain.ValueObject;
 namespace User.Application.Command.CreateUser;
 
 public class CreateUserRequestHandler(IUserRepository userRepository, IMediator mediator, 
-    TimeProvider timeProvider) : IRequestHandler<CreateUserRequest,UserDtoId>
+    TimeProvider timeProvider) : IRequestHandler<CreateUserRequestCommand,UserDtoId>
 {
-    public async Task<UserDtoId> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+    public async Task<UserDtoId> Handle(CreateUserRequestCommand requestCommand, CancellationToken cancellationToken)
     {
-        var address = new Address(request.City, request.Street, request.PostalCode, request.County);
+        var address = new Address(requestCommand.City, requestCommand.Street, requestCommand.PostalCode, requestCommand.County);
         
-        var user = new Domain.Entity.User(request.FirstName, request.LastName, new PhoneNumber(request.PhoneNumber),
-            new Mail(request.MailAddress), address, request.DateOfBirth,  timeProvider);
+        var user = new Domain.Entity.User(requestCommand.FirstName, requestCommand.LastName, new PhoneNumber(requestCommand.PhoneNumber),
+            new Mail(requestCommand.MailAddress), address, requestCommand.DateOfBirth,  timeProvider);
 
-        SetClaims(user, request.Role, timeProvider);    
+        SetClaims(user, requestCommand.Role, timeProvider);    
             
-        await mediator.Send(new CreatePasswordRequest(request.Password, user), cancellationToken);
+        await mediator.Send(new CreatePasswordRequestCommand(requestCommand.Password, user), cancellationToken);
 
         await userRepository.AddAsync(user, cancellationToken);
 

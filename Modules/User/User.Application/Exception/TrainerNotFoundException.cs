@@ -7,7 +7,7 @@ public class UserNotFoundException : BaseException
     
         
    
-    public override string Message => "User_not_found";
+    public override string ErrorMessage => "User_not_found";
    public UserNotFoundException(Guid id) : base($"Training with id {id} not found")
    {
         

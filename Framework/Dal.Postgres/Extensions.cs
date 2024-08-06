@@ -33,9 +33,9 @@ public static class Extensions
         return serviceCollection;
     }
 
-    public static WebApplication UseMigration<T>(this WebApplication application) where T: DbContext
+    public static IApplicationBuilder UseMigration<T>(this IApplicationBuilder application) where T: DbContext
     {
-        using var scope = application.Services.CreateScope();
+        using var scope = application.ApplicationServices.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<T>();
         
         db.Database.Migrate();

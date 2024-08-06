@@ -1,4 +1,6 @@
+using System.Reflection;
 using Dal.Postgres;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using User.Application.Repositories;
@@ -13,7 +15,14 @@ public static class ExtensionsInfra
     {
         services.AddDatabase<UserDbContext>(configuration, "UsersDb");
         services.AddScoped<IUserRepository, UserRepository>();
-        
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         return services;
+    }
+
+    public static IApplicationBuilder UseInfra(this IApplicationBuilder application)
+    {
+        application.UseMigration<UserDbContext>();
+        
+        return application;
     }
 }

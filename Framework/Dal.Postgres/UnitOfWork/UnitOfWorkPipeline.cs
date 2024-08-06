@@ -7,7 +7,7 @@ using Shared.Core;
 
 namespace Dal.Postgres.UnitOfWork;
 
-internal sealed class UnitOfWorkPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public sealed class UnitOfWorkPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
     where TResponse : notnull
 {
@@ -15,7 +15,7 @@ internal sealed class UnitOfWorkPipeline<TRequest, TResponse> : IPipelineBehavio
     private readonly IMediator _mediator;
     private readonly ILogger<UnitOfWorkPipeline<TRequest, TResponse>> _logger;
 
-    internal UnitOfWorkPipeline(IUnitOfWork unitOfWork, IMediator mediator, ILogger<UnitOfWorkPipeline<TRequest, TResponse>> logger)
+    public UnitOfWorkPipeline(IUnitOfWork unitOfWork, IMediator mediator, ILogger<UnitOfWorkPipeline<TRequest, TResponse>> logger)
     {
         _unitOfWork = unitOfWork;
         _mediator = mediator;

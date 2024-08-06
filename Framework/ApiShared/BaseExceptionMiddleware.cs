@@ -14,13 +14,14 @@ internal class BaseExceptionMiddleware(ILogger<BaseExceptionMiddleware> logger) 
         }
         catch (BaseException ex)
         {
-            logger.LogWarning($"Get exception: {ex.Message}");
+            logger.LogWarning($"Get exception: '{ex.ErrorMessage}': {ex.Message}");
             context.Response.StatusCode = 400;
-            await context.Response.WriteAsync(ex.Message);
+            await context.Response.WriteAsync(ex.ErrorMessage);
             
         }
         catch (Exception ex)
         {
+            logger.LogError(ex, "Get exception: {Message}", ex.Message);
             context.Response.StatusCode = 500;
             await context.Response.WriteAsync("Internal server error");
             

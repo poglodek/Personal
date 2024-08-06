@@ -9,11 +9,15 @@ internal class UserConfiguration : IEntityTypeConfiguration<Domain.Entity.User>
 {
     public void Configure(EntityTypeBuilder<Domain.Entity.User> builder)
     {
-        builder.HasKey(x=> x.Id.Value);
-        builder.HasIndex(c => c.MailAddress.Value);
-
+        builder.ToTable("Users", "users");
+        
+        builder.HasKey(x=> x.Id);
+        
         builder.Property(x => x.FirstName)
             .HasConversion(c => c.Value, z => new Name(z));
+        
+        builder.Property(x => x.Role)
+            .HasConversion(c => c.Value, z => new Role(z));
         
         builder.Property(x => x.LastName)
             .HasConversion(c => c.Value, z => new Name(z));

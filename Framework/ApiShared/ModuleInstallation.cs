@@ -14,13 +14,13 @@ public static class ModuleInstallation
     private static ILogger _logger = null!;
     
     
-    public static WebApplicationBuilder InstallModules(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder InstallModules(this WebApplicationBuilder builder,params Type [] types)
     {
         CreateLogger();
         
         _logger.LogInformation("Installing modules...");
         
-        LoadModules();
+        LoadModules(types);
 
         _logger.LogInformation($"Modules Found ({Modules.Count})");
 
@@ -61,18 +61,8 @@ public static class ModuleInstallation
         }).CreateLogger("ModuleInstallation");
     }
 
-    private static void LoadModules()
+    private static void LoadModules(params Type [] types)
     {
-        var assemblies = ReturnAssemblies();
-
-        var types = assemblies.SelectMany(x=>x.GetTypes())
-            .Where(x => x.GetInterfaces()
-                            .Contains(typeof(IModule)) 
-                        && x is { IsInterface: false, IsAbstract: false, IsClass: true }
-                        ).ToList();
-        
-        
-        
         foreach (var type in types)
         {
             if (Activator.CreateInstance(type) is not IModule module)
@@ -95,10 +85,13 @@ public static class ModuleInstallation
 
     private static IEnumerable<Assembly> ReturnAssemblies()
     {
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-        var locations = assemblies.Where(x => !x.IsDynamic).Select(x => x.Location).ToArray();
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+            .ToList();
+        var locations = assemblies.Where(x => !x.IsDynamic)
+            .Select(x => x.Location)
+            .ToArray();
         var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll")
-            .Where(x => !locations.Contains(x, StringComparer.InvariantCultureIgnoreCase) && !x.Contains("System.") && !x.Contains("Microsoft."))
+            .Where(x => !locations.Contains(x, StringComparer.InvariantCultureIgnoreCase))
             .ToList();
         files.ForEach(x => assemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(x))));
         return assemblies;

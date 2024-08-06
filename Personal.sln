@@ -30,7 +30,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Domain", "Modules\User
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Infrastructure", "Modules\User\User.Infrastructure\User.Infrastructure.csproj", "{D4AA219D-A484-4F6C-8B4F-D4873A05A039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Shared", "Modules\User\User.Shared\User.Shared.csproj", "{B5EB7E91-328F-4977-9155-A92911469929}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserModule.Shared", "Modules\User\UserModule.Shared\UserModule.Shared.csproj", "{B5EB7E91-328F-4977-9155-A92911469929}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA913965-3F27-4681-849A-9859FD00AEB2}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

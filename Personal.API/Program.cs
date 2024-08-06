@@ -1,13 +1,15 @@
+using System.Reflection;
 using ApiShared;
 using Auth;
+using User.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuth(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.InstallModules();
-
+builder.InstallModules(typeof(UserModule));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 var app = builder.Build();
 

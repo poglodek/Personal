@@ -5,19 +5,30 @@ using User.Application.Repositories;
 
 namespace User.Application.Command.ActivateUser;
 
-public class ActivateUserRequestHandler(IUserRepository repository, ILogger<ActivateUserRequestHandler> logger, TimeProvider timeProvider) : IRequestHandler<ActivateUserRequest,Unit>
+public class ActivateUserRequestHandler : IRequestHandler<ActivateUserRequestCommand,Unit>
 {
-    public async Task<Unit> Handle(ActivateUserRequest request, CancellationToken cancellationToken)
+    private readonly IUserRepository _repository;
+    private readonly ILogger<ActivateUserRequestHandler> _logger;
+    private readonly TimeProvider _timeProvider;
+
+    public ActivateUserRequestHandler(IUserRepository repository, ILogger<ActivateUserRequestHandler> logger, TimeProvider timeProvider)
     {
-        var User = await repository.GetById(request.Id, cancellationToken);
-        if (User is null)
+        _repository = repository;
+        _logger = logger;
+        _timeProvider = timeProvider;
+    }
+
+    public async Task<Unit> Handle(ActivateUserRequestCommand requestCommand, CancellationToken cancellationToken)
+    {
+        var user = await _repository.GetById(requestCommand.Id, cancellationToken);
+        if (user is null)
         {
-            logger.LogError("User with id {Id} not found", request.Id);
-            throw new UserNotFoundException(request.Id);
+            _logger.LogError("User with id {Id} not found", requestCommand.Id);
+            throw new UserNotFoundException(requestCommand.Id);
         }
         
-        User.Activate(timeProvider);
-        logger.LogInformation("Training with id {Id} activated", request.Id);
+        user.Activate(_timeProvider);
+        _logger.LogInformation("Training with id {Id} activated", requestCommand.Id);
         
         return Unit.Value;
     }

@@ -49,12 +49,12 @@ public class UserModule : IModule
 
         endpointRoute.MapPost("/active/user/{id}", async (IMediator mediator, Guid id, CancellationToken ct) =>
         {
-            await mediator.Send(new ActivateUserRequest(id), cancellationToken: ct);
+            await mediator.Send(new ActivateUserRequestCommand(id), cancellationToken: ct);
             
             return Results.Accepted();
         }).AllowAnonymous();
 
-        endpointRoute.MapPost("register", async (IMediator mediator, CreateUserRequest request, CancellationToken ct) =>
+        endpointRoute.MapPost("register", async (IMediator mediator, CreateUserRequestCommand request, CancellationToken ct) =>
         {
             await mediator.Send(request, cancellationToken: ct);
 
@@ -75,6 +75,8 @@ public class UserModule : IModule
 
     public IApplicationBuilder InstallModule(IApplicationBuilder app)
     {
+        app.UseInfra();
+        
         return app;
     }
 }
