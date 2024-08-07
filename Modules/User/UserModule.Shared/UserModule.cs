@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using User.Application;
 using User.Application.Command.ActivateUser;
 using User.Application.Command.CreateUser;
+using User.Application.Command.LoginUser;
 using User.Infrastructure;
 using User.Infrastructure.Query.GetUserById;
 
@@ -39,7 +40,7 @@ public class UserModule : IModule
             
         }).RequireClaim("User");
         
-        endpointRoute.MapGet("/{id}", async ( IMediator mediator,Guid id, CancellationToken ct) =>
+        endpointRoute.MapGet("/{id}", async ( IMediator mediator, Guid id, CancellationToken ct) =>
         {
             var result = await mediator.Send(new GetByIdRequest(id), cancellationToken: ct);
 
@@ -62,7 +63,7 @@ public class UserModule : IModule
 
         }).AllowAnonymous();
         
-        endpointRoute.MapPost("login", async (IMediator mediator, LoginRequest request, CancellationToken ct) =>
+        endpointRoute.MapPost("login", async (IMediator mediator, LoginUserRequestCommand request, CancellationToken ct) =>
         {
             await mediator.Send(request, cancellationToken: ct);
 

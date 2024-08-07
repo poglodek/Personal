@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Messaging.Kafka.Events;
+namespace Messaging.Integration.Events;
 
 public interface IIntegrationEvent : INotification
 {

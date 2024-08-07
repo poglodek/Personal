@@ -23,15 +23,13 @@ public class User : Shared.Core.Entity
 
     //For EF
     private User(){}
-    
-    public User(Name firstName, Name lastName, PhoneNumber phoneNumber, Mail mailAddress, Address address, DateOnly dateOfBirth, TimeProvider timeProvider)
+
+    private User(Name firstName, Name lastName, Mail mailAddress, DateOnly dateOfBirth, TimeProvider timeProvider)
     {
         Id = Guid.NewGuid();
         FirstName = firstName;
         LastName = lastName;
-        PhoneNumber = phoneNumber;
         MailAddress = mailAddress;
-        Address = address;
         DateOfBirth = dateOfBirth;
         Role = Role.User;
         CreatedAt = timeProvider.GetUtcNow();
@@ -39,13 +37,43 @@ public class User : Shared.Core.Entity
         Update(timeProvider);
         RaiseUp(new UserCreated(Id));
     }
+    
+    private User(Name firstName, Name lastName, PhoneNumber phoneNumber, Mail mailAddress, Address address, DateOnly dateOfBirth, TimeProvider timeProvider): this(firstName,lastName,mailAddress,dateOfBirth,timeProvider)
+    {
+        PhoneNumber = phoneNumber;
+        Address = address;
+    }
 
-    public void SetPassword(PasswordHash hash) => Password = hash;
+    public static User CreateInstance(Name firstName, Name lastName, PhoneNumber phoneNumber, Mail mailAddress, Address address, DateOnly dateOfBirth, TimeProvider timeProvider)
+    {
+        return new User(firstName, lastName, phoneNumber, mailAddress, address, dateOfBirth, timeProvider);
+    }
+
+    public static User CreateWard(Name firstName, Name lastName, Mail mailAddress,
+        DateOnly dateOfBirth, TimeProvider timeProvider, Guid trainerId)
+    {
+        var user = new User(firstName, lastName,  mailAddress,  dateOfBirth, timeProvider);
+        
+        user.RaiseUp(new WardCreated(trainerId, user.Id));
+
+        return user;
+    }
+
+    public void SetPassword(PasswordHash hash, TimeProvider timeProvider)
+    {
+        Password = hash;
+        Update(timeProvider);
+    }
     
     private void Update(TimeProvider timeProvider) => UpdateAt = timeProvider.GetUtcNow();
 
-    public void Activate(TimeProvider timeProvider) =>
+    public void Activate(TimeProvider timeProvider)
+    {
         Activated = new DateReason(timeProvider.GetUtcNow(), "Account was activated");
+        
+        RaiseUp(new UserActivated(Id));
+    }
+        
     
     public void Block(TimeProvider timeProvider, string reason)
     {

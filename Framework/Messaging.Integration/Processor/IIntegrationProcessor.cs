@@ -1,6 +1,6 @@
-using Messaging.Kafka.Events;
+using Messaging.Integration.Events;
 
-namespace Messaging.Kafka.Processor;
+namespace Messaging.Integration.Processor;
 
 public interface IIntegrationProcessor
 {
