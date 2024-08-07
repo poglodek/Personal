@@ -7,7 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\ApiShared\ApiShared.csproj" />
       <ProjectReference Include="..\..\..\Framework\Messaging.Integration\Messaging.Integration.csproj" />
+      <ProjectReference Include="..\Ward.Application\Ward.Application.csproj" />
+      <ProjectReference Include="..\Ward.Domain\Ward.Domain.csproj" />
+      <ProjectReference Include="..\Ward.Infrastructure\Ward.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="module.Ward.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

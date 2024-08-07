@@ -1,6 +1,7 @@
 using MediatR;
 using User.Domain.DomainEvents;
 using WardModule.Shared.IntegrationEvents;
+using WardModule.Shared.IntegrationEvents.WardCreated;
 
 namespace User.Application.Events;
 
