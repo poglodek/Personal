@@ -1,9 +1,9 @@
 using MediatR;
-using Ward.Application.Events.WardCreated;
+using Ward.Application.Events.WardAssignToTrainer;
 
 namespace WardModule.Shared.IntegrationEvents.WardCreated;
 
-public class WardCreatedIntegrationEventHandler : INotificationHandler<WardCreatedIntegrationEvent>
+public class WardCreatedIntegrationEventHandler : INotificationHandler<WardAssignToTrainerIntegrationEvent>
 {
     private readonly IPublisher _publisher;
 
@@ -12,8 +12,8 @@ public class WardCreatedIntegrationEventHandler : INotificationHandler<WardCreat
         _publisher = publisher;
     }
     
-    public Task Handle(WardCreatedIntegrationEvent notification, CancellationToken cancellationToken)
+    public Task Handle(WardAssignToTrainerIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        return _publisher.Publish(new WardCreatedEvent(notification.TrainerId, notification.WardId), cancellationToken);
+        return _publisher.Publish(new WardAssignToTrainerCommand(notification.TrainerId, notification.WardId), cancellationToken);
     }
 }

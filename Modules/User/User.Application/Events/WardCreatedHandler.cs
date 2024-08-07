@@ -16,6 +16,6 @@ public class WardCreatedHandler : INotificationHandler<WardCreated>
     
     public Task Handle(WardCreated notification, CancellationToken cancellationToken)
     {
-        return _publisher.Publish(new WardCreatedIntegrationEvent(notification.TrainerId, notification.WardId), cancellationToken);
+        return _publisher.Publish(new WardAssignToTrainerIntegrationEvent(notification.TrainerId, notification.WardId), cancellationToken);
     }
 }
