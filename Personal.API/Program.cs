@@ -8,7 +8,7 @@ builder.Services.AddAuth(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.InstallModules(typeof(UserModule));
+builder.InstallModules(typeof(UserModule), typeof(WardModule.Shared.WardModule));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 var app = builder.Build();

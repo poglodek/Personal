@@ -6,6 +6,7 @@ public class Ward : Shared.Core.Entity
 {
     public Trainer Trainer { get; private set; }
     
+    private Ward(){}
     public Ward(Guid id, Guid trainerId)
     {
         Id = id;
