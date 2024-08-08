@@ -12,6 +12,7 @@ public class WorkoutPlan : Shared.Core.Entity
     public Description Description { get; private set; }
     public Active Active { get; private set; } = new(true);
     private readonly List<Workout> _workouts = [];
+    public IReadOnlyList<Workout> Workouts => _workouts.AsReadOnly();
 
     private WorkoutPlan() { }
     public WorkoutPlan(Guid wardId, Guid trainerId, Name name, Description description)

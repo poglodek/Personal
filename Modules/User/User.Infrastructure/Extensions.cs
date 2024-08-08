@@ -19,10 +19,10 @@ public static class ExtensionsInfra
         return services;
     }
 
-    public static IApplicationBuilder UseInfra(this IApplicationBuilder application)
+    public static IServiceProvider UseInfra(this IServiceProvider serviceProvider)
     {
-        application.UseMigration<UserDbContext>();
+        serviceProvider.UseMigration<UserDbContext>();
         
-        return application;
+        return serviceProvider;
     }
 }

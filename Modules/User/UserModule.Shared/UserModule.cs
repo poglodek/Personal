@@ -105,10 +105,10 @@ public class UserModule : IModule
         return endpointRoute;
     }
 
-    public IApplicationBuilder InstallModule(IApplicationBuilder app)
+    public IServiceProvider InstallModule(IServiceProvider serviceProvider)
     {
-        app.UseInfra();
+        serviceProvider.UseInfra();
         
-        return app;
+        return serviceProvider;
     }
 }

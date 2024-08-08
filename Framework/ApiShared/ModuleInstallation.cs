@@ -151,7 +151,7 @@ public static class ModuleInstallation
         foreach (var module in Modules.Where(x=>x.IsEnabled))
         {
             _logger.LogInformation($"Installing {module.Module.ModuleName}...");
-            module.Module.InstallModule(builder);
+            module.Module.InstallModule(builder.Services);
 
             _logger.LogInformation($"Adding endpoints for {module.Module.ModuleName}...");
             module.Module.AddEndPoints(builder.MapGroup($"api/{module.Module.ModuleName}"));

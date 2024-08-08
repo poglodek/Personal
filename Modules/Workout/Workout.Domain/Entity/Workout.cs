@@ -8,7 +8,9 @@ public class Workout : Shared.Core.Entity
     public Name Name { get; private set; }
     public Description Description { get; private set; }
     private readonly List<Exercise> _exercises = [];
-    private readonly HashSet<Date> _dates = [];
+    private readonly List<Date> _dates = [];
+    public IReadOnlyList<Exercise> Exercises => _exercises.AsReadOnly();
+    public IReadOnlyList<Date> Dates => _dates.ToList().AsReadOnly();
 
     private Workout(){}
     
@@ -35,6 +37,11 @@ public class Workout : Shared.Core.Entity
     
     public void AddDate(Date date)
     {
+        if (_dates.Contains(date))
+        {
+            return;
+        }
+        
         _dates.Add(date);
     }
     

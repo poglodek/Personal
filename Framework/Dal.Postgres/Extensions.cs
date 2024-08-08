@@ -1,6 +1,5 @@
 using System.Reflection;
 using Dal.Postgres.UnitOfWork;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,13 +32,13 @@ public static class Extensions
         return serviceCollection;
     }
 
-    public static IApplicationBuilder UseMigration<T>(this IApplicationBuilder application) where T: DbContext
+    public static IServiceProvider UseMigration<T>(this IServiceProvider serviceProvider) where T: DbContext
     {
-        using var scope = application.ApplicationServices.CreateScope();
+        using var scope = serviceProvider.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<T>();
         
         db.Database.Migrate();
         
-        return application;
+        return serviceProvider;
     }
 }

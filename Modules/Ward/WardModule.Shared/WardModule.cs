@@ -26,10 +26,11 @@ public class WardModule : IModule
         return endpointRoute;
     }
 
-    public IApplicationBuilder InstallModule(IApplicationBuilder app)
+    public IServiceProvider InstallModule(IServiceProvider serviceProvider)
     {
-        app.UseInfra();
-        return app;
+        serviceProvider.UseInfra();
+        
+        return serviceProvider;
     }
 
     

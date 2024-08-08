@@ -6,4 +6,19 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Command\CopyExercise\" />
+      <Folder Include="Command\CreateExercise\" />
+      <Folder Include="Command\CreateSet\" />
+      <Folder Include="Command\CreateWorkoutPlan\" />
+      <Folder Include="Command\CreateWorkout\" />
+      <Folder Include="Command\EditExercise\" />
+      <Folder Include="Command\EditSet\" />
+      <Folder Include="Command\EditWorkoutPlan\" />
+      <Folder Include="Command\EditWorkout\" />
+      <Folder Include="Command\RemoveExercise\" />
+      <Folder Include="Command\RemoveSet\" />
+      <Folder Include="Command\RemoveWorkout\" />
+    </ItemGroup>
+
 </Project>

@@ -1,6 +1,5 @@
 using System.Reflection;
 using Dal.Postgres;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ward.Application.Repositories;
@@ -19,10 +18,10 @@ public static class ExtensionsInfra
         return services;
     }
 
-    public static IApplicationBuilder UseInfra(this IApplicationBuilder application)
+    public static IServiceProvider UseInfra(this IServiceProvider serviceProvider)
     {
-        application.UseMigration<WardDbContext>();
+        serviceProvider.UseMigration<WardDbContext>();
         
-        return application;
+        return serviceProvider;
     }
 }

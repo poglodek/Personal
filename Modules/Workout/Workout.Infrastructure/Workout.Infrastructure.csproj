@@ -6,4 +6,27 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Query\GetExerciseById\" />
+      <Folder Include="Query\GetExercisesByTrainerId\" />
+      <Folder Include="Query\GetSetById\" />
+      <Folder Include="Query\GetWorkoutPlanByIdAndInMonth\" />
+      <Folder Include="Query\GetWorkoutPlanByWardId\" />
+      <Folder Include="Query\GetWorkoutById\" />
+      <Folder Include="Repositories\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Dal.Postgres\Dal.Postgres.csproj" />
+      <ProjectReference Include="..\Workout.Domain\Workout.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
