@@ -9,16 +9,16 @@ namespace Workout.Infrastructure.Query.GetWorkoutPlanByWardIdAndInMonthQuery;
 
 public class GetWorkoutPlanByWardIdAndInMonthQueryHandler : IRequestHandler<GetWorkoutPlanByWardIdAndInMonthQuery, WorkoutPlanDto>
 {
-    private readonly IWorkoutPlanRepository _workoutPlanRepository;
+    private readonly IWorkoutRepository _workoutRepository;
 
-    public GetWorkoutPlanByWardIdAndInMonthQueryHandler(IWorkoutPlanRepository workoutPlanRepository)
+    public GetWorkoutPlanByWardIdAndInMonthQueryHandler(IWorkoutRepository workoutRepository)
     {
-        _workoutPlanRepository = workoutPlanRepository;
+        _workoutRepository = workoutRepository;
     }
     
     public async Task<WorkoutPlanDto> Handle(GetWorkoutPlanByWardIdAndInMonthQuery request, CancellationToken cancellationToken)
     {
-        var workoutPlan = await _workoutPlanRepository.GetWorkoutPlanByWardIdAndMonth(request.WardId, request.Month, cancellationToken);
+        var workoutPlan = await _workoutRepository.GetWorkoutPlanByWardIdAndMonth(request.WardId, request.Month, cancellationToken);
         if (workoutPlan is null)
         {
             throw new WorkOutPlanNotFound(request.WardId, request.Month);

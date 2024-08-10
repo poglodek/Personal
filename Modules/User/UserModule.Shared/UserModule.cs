@@ -80,7 +80,8 @@ public class UserModule : IModule
 
             return Results.Ok(result);
             
-        }).RequireClaim("User");
+        }).RequireClaim("User")
+            .CacheOutput();
         
         endpointRoute.MapGet("/{id}", async ( IMediator mediator, Guid id, CancellationToken ct) =>
         {
@@ -88,7 +89,8 @@ public class UserModule : IModule
 
             return Results.Ok(result);
             
-        }).RequireClaim("GetUserById");
+        }).RequireClaim("GetUserById")
+        .CacheOutput();
         
         endpointRoute.MapPost("change-password", async (IMediator mediator, ChangePasswordRequest request, CancellationToken ct, HttpContext httpContext) =>
         {

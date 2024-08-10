@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\ApiShared\ApiShared.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Auth\Auth.csproj" />
       <ProjectReference Include="..\..\..\Framework\Messaging.Integration\Messaging.Integration.csproj" />
       <ProjectReference Include="..\Ward.Application\Ward.Application.csproj" />
       <ProjectReference Include="..\Ward.Domain\Ward.Domain.csproj" />

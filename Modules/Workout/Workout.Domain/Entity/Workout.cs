@@ -6,6 +6,7 @@ public class Workout : Shared.Core.Entity
 {
     public Name Name { get; private set; }
     public Description Description { get; private set; }
+    public Active Active { get; private set; } = new(true);
     private readonly List<Exercise> _exercises = [];
     private readonly List<Date> _dates = [];
     public IReadOnlyList<Exercise> Exercises => _exercises.AsReadOnly();
@@ -20,15 +21,25 @@ public class Workout : Shared.Core.Entity
         Description = description;
     }
     
+    public void Activate()
+    {
+        Active = new Active(true);
+    }
+    
+    public void Deactivate()
+    {
+        Active = new Active(false);
+    }
+    
     public void AddExercise(Exercise exercise)
     {
         _exercises.Add(exercise);
     }
     
-    public void RemoveExercise(Exercise? exercise)
+    public void RemoveExercise(Guid? exerciseId)
     {
-        var exerciseToRemove = _exercises.FirstOrDefault(x => x.Id == exercise?.Id);
-        if (exercise is not null)
+        var exerciseToRemove = _exercises.FirstOrDefault(x => x.Id == exerciseId);
+        if (exerciseToRemove is not null)
         {
             _exercises.Remove(exerciseToRemove!);
         }

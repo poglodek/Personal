@@ -17,5 +17,6 @@ public record Claim(string Value)
         new("RemoveWorkout"),
         new("AddExercise"),
         new("RemoveExercise"),
+        new("Ward"),
     };
 }

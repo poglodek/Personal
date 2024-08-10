@@ -17,6 +17,15 @@ public static class ModuleInstallation
     public static WebApplicationBuilder InstallModules(this WebApplicationBuilder builder,params Type [] types)
     {
         CreateLogger();
+        builder.Services.AddMemoryCache();
+        builder.Services.AddOutputCache(options =>
+        {
+            options.AddBasePolicy(builder => builder
+                    .Expire(TimeSpan.FromMinutes(1)) 
+                    .SetVaryByHeader("Authorization")
+            );
+        });
+        
         
         _logger.LogInformation("Installing modules...");
         

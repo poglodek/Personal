@@ -2,7 +2,7 @@ using Workout.Domain.Entity;
 
 namespace Workout.Infrastructure.Dto;
 
-public record ExerciseDto(Guid Id, Guid TrainerId, string Name, string Description, Guid? PrimaryId, bool Active, List<SetDto> Sets);
+public record ExerciseDto(Guid Id, Guid TrainerId, string Name, string Description, Guid? PrimaryId, bool Active, string Link,List<SetDto> Sets);
 
 public static class ExerciseDtoExtensions
 {
@@ -14,6 +14,7 @@ public static class ExerciseDtoExtensions
             exercise.Description.Value,
             exercise.PrimaryId,
             exercise.Active.Value,
+            exercise.Link.Value,
             exercise.Sets.Select(x=> x.ToDto()).ToList());
     }
 }

@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Command\CopyExercise\" />
-      <Folder Include="Command\CreateExercise\" />
-      <Folder Include="Command\CreateSet\" />
-      <Folder Include="Command\CreateWorkoutPlan\" />
-      <Folder Include="Command\CreateWorkout\" />
-      <Folder Include="Command\EditExercise\" />
-      <Folder Include="Command\EditSet\" />
-      <Folder Include="Command\EditWorkoutPlan\" />
-      <Folder Include="Command\EditWorkout\" />
-      <Folder Include="Command\RemoveExercise\" />
-      <Folder Include="Command\RemoveSet\" />
-      <Folder Include="Command\RemoveWorkout\" />
+      <Folder Include="Command\WorkoutPlan\AddWorkoutPlanToAnotherWard\" />
+      <Folder Include="Command\WorkoutPlan\AddWorkoutToWorkoutPlan\" />
+      <Folder Include="Command\WorkoutPlan\CreateWorkoutPlan\" />
+      <Folder Include="Command\WorkoutPlan\EditWorkoutPlan\" />
+      <Folder Include="Command\WorkoutPlan\RemoveWorkoutFromWorkoutPlan\" />
+      <Folder Include="Command\WorkoutPlan\SetActiveOfWorkoutPlan\" />
+      <Folder Include="Command\Workout\AddDateToWorkout\" />
+      <Folder Include="Command\Workout\AddExerciseToWorkout\" />
+      <Folder Include="Command\Workout\CreateWorkout\" />
+      <Folder Include="Command\Workout\EditWorkout\" />
+      <Folder Include="Command\Workout\RemoveDateFromWorkout\" />
+      <Folder Include="Command\Workout\RemoveExerciseFromWorkout\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -8,6 +8,7 @@ public class Exercise : Shared.Core.Entity
     public Guid TrainerId { get; init; }
     public Name Name { get; private set; }
     public Description Description { get; private set; }
+    public Link Link { get; private set; }
     public Guid? PrimaryId { get; private set; }
     public Exercise? Primary { get; private set; } = null;
     public Active Active { get; private set; } = new (true);
@@ -16,12 +17,13 @@ public class Exercise : Shared.Core.Entity
     public IReadOnlyList<Set> Sets => _sets.AsReadOnly();
 
     private Exercise() { }
-    public Exercise(Guid trainerId, Name name, Description description)
+    public Exercise(Guid trainerId, Name name, Description description, Link link)
     {
         Id = Guid.NewGuid();
         TrainerId = trainerId;
         Name = name;
         Description = description;
+        Link = link;
     }
 
     public void AddSet(Set set)
@@ -43,7 +45,11 @@ public class Exercise : Shared.Core.Entity
         Description = description;
     }
     
-    
+    public void SetNewLink(Link link)
+    {
+        Link = link;
+    }
+ 
     public void DeActivate()
     {
         Active = new (false);
