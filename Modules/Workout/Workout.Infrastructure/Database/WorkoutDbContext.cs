@@ -24,6 +24,21 @@ public class WorkoutDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         
         modelBuilder.Entity<Date>().HasNoKey();
+        
+        modelBuilder.Entity<WorkoutPlan>()
+            .Navigation(b => b.Workouts)
+            .AutoInclude();
+        
+        modelBuilder.Entity<Domain.Entity.Workout>()
+            .Navigation(b => b.Exercises)
+            .AutoInclude();
+        
+          
+        modelBuilder.Entity<Exercise>()
+            .Navigation(b => b.Sets)
+            .AutoInclude();
+        
+        
         base.OnModelCreating(modelBuilder);
     }
 

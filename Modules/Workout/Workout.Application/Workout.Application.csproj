@@ -21,4 +21,8 @@
       <Folder Include="Command\RemoveWorkout\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Workout.Domain\Workout.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

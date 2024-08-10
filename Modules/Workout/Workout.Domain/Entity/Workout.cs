@@ -4,7 +4,6 @@ namespace Workout.Domain.Entity;
 
 public class Workout : Shared.Core.Entity
 {
-
     public Name Name { get; private set; }
     public Description Description { get; private set; }
     private readonly List<Exercise> _exercises = [];
