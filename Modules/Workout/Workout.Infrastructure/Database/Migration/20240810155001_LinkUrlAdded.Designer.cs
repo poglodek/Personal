@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Workout.Infrastructure.Database;
@@ -11,9 +12,11 @@ using Workout.Infrastructure.Database;
 namespace Workout.Infrastructure.Database.Migration
 {
     [DbContext(typeof(WorkoutDbContext))]
-    partial class WorkoutDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240810155001_LinkUrlAdded")]
+    partial class LinkUrlAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,9 +79,6 @@ namespace Workout.Infrastructure.Database.Migration
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ExerciseId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Repeat")
                         .IsRequired()
                         .HasColumnType("text");
@@ -90,13 +90,16 @@ namespace Workout.Infrastructure.Database.Migration
                     b.Property<int>("RestTime")
                         .HasColumnType("integer");
 
+                    b.Property<Guid?>("SetId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExerciseId");
+                    b.HasIndex("SetId");
 
                     b.ToTable("Set", "workout");
                 });
@@ -118,7 +121,7 @@ namespace Workout.Infrastructure.Database.Migration
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("WorkoutPlanId")
+                    b.Property<Guid?>("WorkoutId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("_dates")
@@ -127,7 +130,7 @@ namespace Workout.Infrastructure.Database.Migration
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkoutPlanId");
+                    b.HasIndex("WorkoutId");
 
                     b.ToTable("Workout", "workout");
                 });
@@ -164,6 +167,22 @@ namespace Workout.Infrastructure.Database.Migration
                     b.ToTable("WorkoutPlan", "workout");
                 });
 
+            modelBuilder.Entity("Workout.Domain.ValueObject.Active", b =>
+                {
+                    b.Property<bool>("Value")
+                        .HasColumnType("boolean");
+
+                    b.ToTable("Active");
+                });
+
+            modelBuilder.Entity("Workout.Domain.ValueObject.Date", b =>
+                {
+                    b.Property<DateOnly>("Value")
+                        .HasColumnType("date");
+
+                    b.ToTable("Date");
+                });
+
             modelBuilder.Entity("Workout.Domain.Entity.Exercise", b =>
                 {
                     b.HasOne("Workout.Domain.Entity.Exercise", "Primary")
@@ -182,14 +201,14 @@ namespace Workout.Infrastructure.Database.Migration
                 {
                     b.HasOne("Workout.Domain.Entity.Exercise", null)
                         .WithMany("Sets")
-                        .HasForeignKey("ExerciseId");
+                        .HasForeignKey("SetId");
                 });
 
             modelBuilder.Entity("Workout.Domain.Entity.Workout", b =>
                 {
                     b.HasOne("Workout.Domain.Entity.WorkoutPlan", null)
                         .WithMany("Workouts")
-                        .HasForeignKey("WorkoutPlanId");
+                        .HasForeignKey("WorkoutId");
                 });
 
             modelBuilder.Entity("Workout.Domain.Entity.Exercise", b =>

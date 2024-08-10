@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Workout.Infrastructure.Database;
@@ -11,9 +12,11 @@ using Workout.Infrastructure.Database;
 namespace Workout.Infrastructure.Database.Migration
 {
     [DbContext(typeof(WorkoutDbContext))]
-    partial class WorkoutDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240810155426_FixRelations")]
+    partial class FixRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,6 +165,22 @@ namespace Workout.Infrastructure.Database.Migration
                     b.HasIndex("Id", "TrainerId");
 
                     b.ToTable("WorkoutPlan", "workout");
+                });
+
+            modelBuilder.Entity("Workout.Domain.ValueObject.Active", b =>
+                {
+                    b.Property<bool>("Value")
+                        .HasColumnType("boolean");
+
+                    b.ToTable("Active");
+                });
+
+            modelBuilder.Entity("Workout.Domain.ValueObject.Date", b =>
+                {
+                    b.Property<DateOnly>("Value")
+                        .HasColumnType("date");
+
+                    b.ToTable("Date");
                 });
 
             modelBuilder.Entity("Workout.Domain.Entity.Exercise", b =>

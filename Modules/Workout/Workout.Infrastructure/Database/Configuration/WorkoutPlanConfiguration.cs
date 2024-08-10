@@ -16,8 +16,7 @@ public class WorkoutPlanConfiguration  : IEntityTypeConfiguration<WorkoutPlan>
         builder.HasIndex(x => new {x.Id, x.TrainerId});
         
         builder.HasMany(x=>x.Workouts)
-            .WithOne()
-            .HasForeignKey("WorkoutId");
+            .WithOne();
         
         builder.Navigation(x => x.Workouts)
             .UsePropertyAccessMode(PropertyAccessMode.Field);

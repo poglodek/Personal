@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Framework\ApiShared\ApiShared.csproj" />
       <ProjectReference Include="..\Modules\User\UserModule.Shared\UserModule.Shared.csproj" />
+      <ProjectReference Include="..\Modules\Workout\WorkoutModule.Shared\WorkoutModule.Shared.csproj" />
     </ItemGroup>
 
 </Project>

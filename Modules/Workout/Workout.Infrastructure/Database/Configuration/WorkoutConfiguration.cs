@@ -15,8 +15,7 @@ public class WorkoutConfiguration : IEntityTypeConfiguration<Domain.Entity.Worko
         builder.ToTable("Workout", "workout");
         
         builder.HasMany(x=>x.Exercises)
-            .WithOne()
-            .HasForeignKey("WorkoutId");
+            .WithOne();
         
         builder.Navigation(x => x.Exercises)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
@@ -28,6 +27,10 @@ public class WorkoutConfiguration : IEntityTypeConfiguration<Domain.Entity.Worko
    
         builder.Property(x => x.Description)
             .HasConversion(x => x.Value, c => new Description(c));
+        
+   
+        builder.Property(x => x.Active)
+            .HasConversion(x => x.Value, c => new Active(c));
         
         var datesConverter = new ValueConverter<List<Date>, string>(
             v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),

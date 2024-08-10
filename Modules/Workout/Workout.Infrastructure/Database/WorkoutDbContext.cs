@@ -23,7 +23,7 @@ public class WorkoutDbContext : DbContext, IUnitOfWork
     {
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         
-        modelBuilder.Entity<Date>().HasNoKey();
+        
         
         modelBuilder.Entity<WorkoutPlan>()
             .Navigation(b => b.Workouts)

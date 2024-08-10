@@ -19,8 +19,7 @@ public class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
         builder.HasIndex(x => new {x.Id, x.TrainerId});
         
         builder.HasMany(x=>x.Sets)
-            .WithOne()
-            .HasForeignKey("SetId");
+            .WithOne();
         
         builder.Navigation(x => x.Sets)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
@@ -38,6 +37,10 @@ public class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
         
         builder.Property(x => x.Active)
             .HasConversion(x => x.Value, c => new Active(c));
+        
+        
+        builder.Property(x => x.Link)
+            .HasConversion(x => x.Value, c => new Link(c));
         
 
 
