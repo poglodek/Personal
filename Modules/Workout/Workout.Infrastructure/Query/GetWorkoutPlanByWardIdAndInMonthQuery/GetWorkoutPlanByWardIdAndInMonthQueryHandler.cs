@@ -9,9 +9,9 @@ namespace Workout.Infrastructure.Query.GetWorkoutPlanByWardIdAndInMonthQuery;
 
 public class GetWorkoutPlanByWardIdAndInMonthQueryHandler : IRequestHandler<GetWorkoutPlanByWardIdAndInMonthQuery, WorkoutPlanDto>
 {
-    private readonly IWorkoutRepository _workoutRepository;
+    private readonly IWorkoutPlanRepository _workoutRepository;
 
-    public GetWorkoutPlanByWardIdAndInMonthQueryHandler(IWorkoutRepository workoutRepository)
+    public GetWorkoutPlanByWardIdAndInMonthQueryHandler(IWorkoutPlanRepository workoutRepository)
     {
         _workoutRepository = workoutRepository;
     }

@@ -52,28 +52,11 @@ public class WorkoutPlan : Shared.Core.Entity
     {
         Active = new(false);
     }
-    
-    public void Activate()
-    {
-        Active = new(true);
-    }
+
     private void AssignNewWard(Guid wardId)
     {
         Id = Guid.NewGuid();
         WardId = wardId;
     }
-    
-    public WorkoutPlan ReturnWorkoutPlanToAnotherWard(Guid wardId)
-    {
-        if(WardId == wardId)
-        {
-            throw new WorkoutPlanIsAlreadyAssignedToThisWardException(Id); 
-        }
-        
-        var json = JsonSerializer.Serialize(this);
-        var plan =  JsonSerializer.Deserialize<WorkoutPlan>(json)!;
-        plan.AssignNewWard(wardId);
 
-        return plan;
-    }
 }

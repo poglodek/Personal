@@ -34,4 +34,17 @@ internal class ExerciseRepository : IExerciseRepository
     {
         await _dbContext.Exercises.AddAsync(exercise, cancellationToken);
     }
+    
+    public async Task<IEnumerable<Exercise>> GetExercisesByTrainerIdAsync(Guid trainerId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Exercises
+            .TagWith("GetExercisesByTrainerIdAsync")
+            .IgnoreAutoIncludes()
+            .Where(x => x.TrainerId == trainerId)
+            .Where(x => x.Active.Value)
+            .AsSplitQuery()
+            .ToListAsync(cancellationToken);
+        
+    }
+
 }

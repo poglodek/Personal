@@ -55,10 +55,6 @@ public class Exercise : Shared.Core.Entity
         Active = new (false);
     }
     
-    public void Activate()
-    {
-        Active = new (true);
-    }
     
     private void GenerateNewId()
     {
@@ -86,7 +82,10 @@ public class Exercise : Shared.Core.Entity
         
         return newExercises;
     }
-   
 
 
+    public void SetNewName(Name name)
+    {
+        Name = name;
+    }
 }

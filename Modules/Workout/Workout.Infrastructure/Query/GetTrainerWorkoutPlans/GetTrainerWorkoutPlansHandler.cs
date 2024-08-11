@@ -6,9 +6,9 @@ namespace Workout.Infrastructure.Query.GetTrainerWorkoutPlans;
 
 public class GetTrainerWorkoutPlansQueryHandler : IRequestHandler<GetTrainerWorkoutPlansQuery,IReadOnlyList<WorkoutPlanDto>>
 {
-    private readonly IWorkoutRepository _repository;
+    private readonly IWorkoutPlanRepository _repository;
 
-    public GetTrainerWorkoutPlansQueryHandler(IWorkoutRepository repository)
+    public GetTrainerWorkoutPlansQueryHandler(IWorkoutPlanRepository repository)
     {
         _repository = repository;
     }

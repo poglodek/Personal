@@ -7,4 +7,5 @@ public interface IExerciseRepository
     Task<Exercise?> GetExerciseById(Guid requestExerciseId, CancellationToken cancellationToken);
     Task<Exercise?> GetExerciseBySetId(Guid requestId, CancellationToken cancellationToken);
     Task AddExerciseAsync(Exercise exercise, CancellationToken cancellationToken);
+    Task<IEnumerable<Exercise>> GetExercisesByTrainerIdAsync(Guid trainerId, CancellationToken cancellationToken);
 }
