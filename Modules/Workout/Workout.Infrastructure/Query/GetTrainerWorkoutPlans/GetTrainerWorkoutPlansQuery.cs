@@ -1,5 +1,5 @@
 using MediatR;
-using Workout.Infrastructure.Dto;
+using Workout.Application.Dto;
 
 namespace Workout.Infrastructure.Query.GetTrainerWorkoutPlans;
 

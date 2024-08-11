@@ -1,4 +1,4 @@
-namespace Workout.Infrastructure.Dto;
+namespace Workout.Application.Dto;
 
 public record WorkoutDto(Guid Id, string Name, string Description, List<DateOnly> Dates, List<ExerciseDto> Exercises);
 

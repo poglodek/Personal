@@ -1,6 +1,6 @@
 using MediatR;
+using Workout.Application.Dto;
 using Workout.Application.Repositories;
-using Workout.Infrastructure.Dto;
 
 namespace Workout.Infrastructure.Query.GetTrainerExercise;
 

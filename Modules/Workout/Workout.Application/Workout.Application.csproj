@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Command\Exercise\CopyExercise\" />
+      <Folder Include="Command\Exercise\EditExercise\" />
       <Folder Include="Command\WorkoutPlan\AddWorkoutPlanToAnotherWard\" />
       <Folder Include="Command\WorkoutPlan\AddWorkoutToWorkoutPlan\" />
       <Folder Include="Command\WorkoutPlan\CreateWorkoutPlan\" />

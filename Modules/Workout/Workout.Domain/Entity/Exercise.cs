@@ -31,10 +31,10 @@ public class Exercise : Shared.Core.Entity
         _sets.Add(set);
     }
     
-    public void RemoveSet(Set? set)
+    public void RemoveSet(Guid setId)
     {
-        var setToRemove = _sets.FirstOrDefault(x => x.Id == set?.Id);
-        if (set is not null)
+        var setToRemove = _sets.FirstOrDefault(x => x.Id == setId);
+        if (setToRemove is not null)
         {
             _sets.Remove(setToRemove!);
         }
@@ -76,6 +76,13 @@ public class Exercise : Shared.Core.Entity
         var newExercises = JsonSerializer.Deserialize<Exercise>(json);
         newExercises!.GenerateNewId();
         newExercises!.SetSecondary(this);
+        newExercises._sets.Clear();
+
+        foreach (var set in _sets)
+        {
+            newExercises.AddSet(new Set(set.Repeat, set.RestTime, set.RepetitionRate, set.Description, set.Type.Value));
+        }
+        
         
         return newExercises;
     }

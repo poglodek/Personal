@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Logging;
+using Workout.Application.Dto;
 using Workout.Application.Repositories;
-using Workout.Infrastructure.Dto;
 using Workout.Infrastructure.Exception;
 
 namespace Workout.Infrastructure.Query.GetWorkoutPlanByWardIdAndInMonthQuery;

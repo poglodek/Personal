@@ -14,6 +14,7 @@ public static class ExtensionsInfra
     {
         services.AddDatabase<WorkoutDbContext>(configuration, "WorkoutDb");
         services.AddScoped<IWorkoutRepository, WorkoutRepository>();
+        services.AddScoped<IExerciseRepository, ExerciseRepository>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         return services;
     }

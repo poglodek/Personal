@@ -1,7 +1,7 @@
 using Workout.Domain.Entity;
 using Workout.Domain.ValueObject;
 
-namespace Workout.Infrastructure.Dto;
+namespace Workout.Application.Dto;
 
 public record SetDto(Guid Id, string Repeat, string Description, int RestTimeSeconds, string Type, RepetitionRateDto RepetitionRate);
 
