@@ -13,6 +13,7 @@ public static class ExtensionsInfra
     public static IServiceCollection AddWorkoutInfra(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDatabase<WorkoutDbContext>(configuration, "WorkoutDb");
+        services.AddScoped<IWorkoutPlanRepository, WorkoutPlanRepository>();
         services.AddScoped<IWorkoutRepository, WorkoutRepository>();
         services.AddScoped<IExerciseRepository, ExerciseRepository>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

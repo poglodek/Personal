@@ -7,11 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Command\WorkoutPlan\AddWorkoutPlanToAnotherWard\" />
+      <ProjectReference Include="..\..\..\Framework\ApiShared\ApiShared.csproj" />
+      <ProjectReference Include="..\Notification\Notification.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Workout.Domain\Workout.Domain.csproj" />
+      <None Update="module.Notification.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -6,12 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Command\WorkoutPlan\AddWorkoutPlanToAnotherWard\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Workout.Domain\Workout.Domain.csproj" />
-    </ItemGroup>
-
 </Project>

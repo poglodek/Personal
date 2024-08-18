@@ -29,10 +29,10 @@ public class WorkoutPlan : Shared.Core.Entity
         _workouts.Add(workout);
     }
     
-    public void RemoveWorkout(Workout? workout)
+    public void RemoveWorkout(Guid? workoutId)
     {
-        var workoutToRemove = _workouts.FirstOrDefault(x => x.Id == workout?.Id);
-        if (workout is not null)
+        var workoutToRemove = _workouts.FirstOrDefault(x => x.Id == workoutId);
+        if (workoutToRemove is not null)
         {
             _workouts.Remove(workoutToRemove!);
         }

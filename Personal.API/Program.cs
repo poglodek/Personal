@@ -1,6 +1,7 @@
 using System.Reflection;
 using ApiShared;
 using Auth;
+using Notification.Shared;
 using User.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ builder.Services.AddAuth(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.InstallModules(typeof(UserModule), typeof(WardModule.Shared.WardModule), typeof(WorkoutModule.Shared.WorkoutModule));
+builder.InstallModules(typeof(UserModule), typeof(WardModule.Shared.WardModule), typeof(WorkoutModule.Shared.WorkoutModule), typeof(NotificationModule));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 var app = builder.Build();

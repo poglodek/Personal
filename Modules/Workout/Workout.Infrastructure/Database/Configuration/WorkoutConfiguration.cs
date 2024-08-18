@@ -13,9 +13,9 @@ public class WorkoutConfiguration : IEntityTypeConfiguration<Domain.Entity.Worko
     public void Configure(EntityTypeBuilder<Domain.Entity.Workout> builder)
     {
         builder.ToTable("Workout", "workout");
-        
-        builder.HasMany(x=>x.Exercises)
-            .WithOne();
+
+        builder.HasMany(x => x.Exercises)
+            .WithMany();
         
         builder.Navigation(x => x.Exercises)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
