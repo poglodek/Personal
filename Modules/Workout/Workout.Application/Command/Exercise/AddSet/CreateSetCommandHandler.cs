@@ -18,7 +18,7 @@ public class CreateSetCommandHandler : IRequestHandler<CreateSetCommand,SetDto>
     
     public async Task<SetDto> Handle(CreateSetCommand request, CancellationToken cancellationToken)
     {
-        var exercise = await _exerciseRepository.GetExerciseById(request.ExerciseId, cancellationToken);
+        var exercise = await _exerciseRepository.GetExerciseByIdAsync(request.ExerciseId, cancellationToken);
 
         if (exercise is null)
         {

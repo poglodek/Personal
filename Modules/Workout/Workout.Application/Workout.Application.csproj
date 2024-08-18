@@ -9,14 +9,9 @@
     <ItemGroup>
       <Folder Include="Command\WorkoutPlan\AddWorkoutPlanToAnotherWard\" />
       <Folder Include="Command\WorkoutPlan\AddWorkoutToWorkoutPlan\" />
-      <Folder Include="Command\WorkoutPlan\CreateWorkoutPlan\" />
       <Folder Include="Command\WorkoutPlan\EditWorkoutPlan\" />
       <Folder Include="Command\WorkoutPlan\RemoveWorkoutFromWorkoutPlan\" />
       <Folder Include="Command\WorkoutPlan\SetActiveOfWorkoutPlan\" />
-      <Folder Include="Command\Workout\AddExerciseToWorkout\" />
-      <Folder Include="Command\Workout\EditWorkout\" />
-      <Folder Include="Command\Workout\RemoveDateFromWorkout\" />
-      <Folder Include="Command\Workout\RemoveExerciseFromWorkout\" />
     </ItemGroup>
 
     <ItemGroup>

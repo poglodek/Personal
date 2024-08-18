@@ -33,6 +33,11 @@ public class Workout : Shared.Core.Entity
     
     public void AddExercise(Exercise exercise)
     {
+        if (_exercises.Exists(x => x.Id == exercise.Id))
+        {
+            return;
+        }
+        
         _exercises.Add(exercise);
     }
     

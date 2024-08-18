@@ -16,7 +16,7 @@ public class CopyExerciseCommandHandler : IRequestHandler<CopyExerciseCommand, E
     
     public async Task<ExerciseDto> Handle(CopyExerciseCommand request, CancellationToken cancellationToken)
     {
-        var exercise = await _repository.GetExerciseById(request.Id, cancellationToken);
+        var exercise = await _repository.GetExerciseByIdAsync(request.Id, cancellationToken);
         if (exercise is null)
         {
             throw new ExerciseNotFound(request.Id);

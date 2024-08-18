@@ -14,7 +14,7 @@ internal class ExerciseRepository : IExerciseRepository
         _dbContext = dbContext;
     }
     
-    public Task<Exercise?> GetExerciseById(Guid exerciseId, CancellationToken cancellationToken)
+    public Task<Exercise?> GetExerciseByIdAsync(Guid exerciseId, CancellationToken cancellationToken)
     {
         return _dbContext
             .Exercises

@@ -10,7 +10,7 @@ internal class WorkoutPlanRepository : IWorkoutPlanRepository
 {
     private readonly WorkoutDbContext _dbContext;
     
-    public WorkoutPlanRepository(WorkoutDbContext dbContext, IMemoryCache cache)
+    public WorkoutPlanRepository(WorkoutDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -45,4 +45,8 @@ internal class WorkoutPlanRepository : IWorkoutPlanRepository
 
     }
 
+    public async Task AddWorkoutPlanAsync(WorkoutPlan workoutPlan, CancellationToken cancellationToken = default)
+    {
+        await _dbContext.WorkoutPlans.AddAsync(workoutPlan, cancellationToken);
+    }
 }
