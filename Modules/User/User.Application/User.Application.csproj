@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Auth\Auth.csproj" />
+      <ProjectReference Include="..\..\Notification\Notification.Shared\Notification.Shared.csproj" />
       <ProjectReference Include="..\..\Ward\WardModule.Shared\WardModule.Shared.csproj" />
       <ProjectReference Include="..\User.Domain\User.Domain.csproj" />
     </ItemGroup>
