@@ -1,0 +1,35 @@
+.gradientNavBar {
+    background: linear-gradient(to bottom,
+    rgb(15, 143, 165), 
+    rgb(50, 173, 230), 
+    rgb(0, 122, 255) 
+    );
+}
+
+.selectedNavItem {
+    background-color: rgba(0, 64, 221, 0.3);
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 5px 0;
+    color: rgba(235,235,220);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.selectedNavItem:hover {
+    background-color: rgba(0, 64, 221, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navItem {
+    border-radius: 8px;
+    color: rgba(235,235,220);
+    padding: 10px 15px;
+    margin: 5px 0;
+    display: block; 
+}
+
+.navItem:hover {
+    background-color: rgba(0, 0, 0, 0.05); 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease
+}
