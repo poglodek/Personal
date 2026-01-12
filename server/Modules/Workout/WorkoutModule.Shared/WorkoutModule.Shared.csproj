@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\ApiShared\ApiShared.csproj" />
+      <ProjectReference Include="..\Workout.Infrastructure\Workout.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="module.Workout.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

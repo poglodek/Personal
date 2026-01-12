@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>User.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="14.0.0" />
+      <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Auth\Auth.csproj" />
+      <ProjectReference Include="..\..\Notification\Notification.Shared\Notification.Shared.csproj" />
+      <ProjectReference Include="..\..\Ward\WardModule.Shared\WardModule.Shared.csproj" />
+      <ProjectReference Include="..\User.Domain\User.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
