@@ -13,6 +13,7 @@ using User.Application.Command.ActivateUser;
 using User.Application.Command.ChangePassword;
 using User.Application.Command.CreateUser;
 using User.Application.Command.LoginUser;
+using User.Application.Command.RefreshToken;
 using User.Application.Command.SetPassword;
 using User.Infrastructure;
 using User.Infrastructure.Query.GetUserById;
@@ -71,11 +72,11 @@ public class UserModule : IModule
         #endregion
 
         #region RequireClaim
-        endpointRoute.MapPost("refresh-token", async (IMediator mediator, LoginUserRequestCommand request, CancellationToken ct) =>
+        endpointRoute.MapPost("refresh-token", async (IMediator mediator, RefreshTokenRequestCommand request, CancellationToken ct) =>
         {
-            await mediator.Send(request, cancellationToken: ct);
+            var result = await mediator.Send(request, cancellationToken: ct);
 
-            return Results.Ok();
+            return Results.Ok(result);
 
         }).AllowAnonymous();
         

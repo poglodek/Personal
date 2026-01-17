@@ -1,5 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using Funfair.Auth;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -39,8 +41,21 @@ internal class JsonWebTokenManager(AuthOptions options, AuthExtensions.SecurityK
             AccessToken = accessToken,
             ExpiresAt = expires,
             UserId = userId,
-            Role = role, 
+            Role = role,
         };
     }
-    
+
+    public string GenerateRefreshToken()
+    {
+        var randomBytes = new byte[64];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomBytes);
+        return Convert.ToBase64String(randomBytes);
+    }
+
+    public string HashRefreshToken(string refreshToken)
+    {
+        var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken));
+        return Convert.ToBase64String(bytes);
+    }
 }

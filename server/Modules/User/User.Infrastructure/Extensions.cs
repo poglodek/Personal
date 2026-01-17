@@ -13,10 +13,9 @@ public static class ExtensionsInfra
     public static IServiceCollection AddUserInfra(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDatabase<UserDbContext>(configuration, "UsersDb");
-        
-        services.AddScoped<IUserRepository, UserRepository>();
 
-        
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         return services;

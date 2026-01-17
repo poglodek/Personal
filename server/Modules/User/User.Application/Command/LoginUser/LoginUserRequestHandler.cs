@@ -1,4 +1,5 @@
 using Auth;
+using Funfair.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -10,19 +11,29 @@ namespace User.Application.Command.LoginUser;
 public class LoginUserRequestHandler : IRequestHandler<LoginUserRequestCommand, JwtTokenDto>
 {
     private readonly IUserRepository _repository;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly ILogger<LoginUserRequestHandler> _logger;
     private readonly IPasswordHasher<Domain.Entity.User> _passwordHasher;
     private readonly IJsonWebTokenManager _jsonWebTokenManager;
     private readonly TimeProvider _timeProvider;
+    private readonly AuthOptions _authOptions;
 
-    public LoginUserRequestHandler(IUserRepository repository, ILogger<LoginUserRequestHandler> logger, 
-        IPasswordHasher<Domain.Entity.User> passwordHasher,IJsonWebTokenManager jsonWebTokenManager, TimeProvider timeProvider)
+    public LoginUserRequestHandler(
+        IUserRepository repository,
+        IRefreshTokenRepository refreshTokenRepository,
+        ILogger<LoginUserRequestHandler> logger,
+        IPasswordHasher<Domain.Entity.User> passwordHasher,
+        IJsonWebTokenManager jsonWebTokenManager,
+        TimeProvider timeProvider,
+        AuthOptions authOptions)
     {
         _repository = repository;
+        _refreshTokenRepository = refreshTokenRepository;
         _logger = logger;
         _passwordHasher = passwordHasher;
         _jsonWebTokenManager = jsonWebTokenManager;
         _timeProvider = timeProvider;
+        _authOptions = authOptions;
     }
 
     public async Task<JwtTokenDto> Handle(LoginUserRequestCommand requestCommand, CancellationToken cancellationToken)
@@ -57,11 +68,22 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequestCommand, 
             _logger.LogError("User with id {id} has blocked account reason: {reason}", user.Id, user.Blocked.Reason);
             throw new UserBlockedException(user.Id);
         }
-        
+
+        var refreshToken = _jsonWebTokenManager.GenerateRefreshToken();
+        var refreshTokenHash = _jsonWebTokenManager.HashRefreshToken(refreshToken);
+
+        var refreshTokenEntity = Domain.Entity.RefreshToken.Create(
+            user.Id,
+            refreshTokenHash,
+            _timeProvider.GetUtcNow().AddHours(_authOptions.RefreshExpireInHours),
+            _timeProvider);
+
+        await _refreshTokenRepository.AddAsync(refreshTokenEntity, cancellationToken);
+
         var jwt = _jsonWebTokenManager.CreateToken(user.Id, user.MailAddress.Value, user.Role.Value);
 
         user.SetLastLogin(_timeProvider);
-        
-        return jwt;
+
+        return jwt with { RefreshToken = refreshToken };
     }
 }

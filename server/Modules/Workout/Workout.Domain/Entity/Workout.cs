@@ -1,3 +1,4 @@
+using Workout.Domain.Events;
 using Workout.Domain.ValueObject;
 
 namespace Workout.Domain.Entity;
@@ -56,8 +57,9 @@ public class Workout : Shared.Core.Entity
         {
             return;
         }
-        
+
         _dates.Add(date);
+        RaiseUp(new WorkoutDateAdded(Id, date));
     }
     
     public void RemoveDate(Date date)

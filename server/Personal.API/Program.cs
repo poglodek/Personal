@@ -6,7 +6,7 @@ using User.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuth(builder.Configuration);
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.InstallModules(typeof(UserModule), typeof(WardModule.Shared.WardModule), typeof(WorkoutModule.Shared.WorkoutModule), typeof(NotificationModule));

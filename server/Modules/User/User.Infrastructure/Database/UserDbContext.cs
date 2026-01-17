@@ -8,6 +8,7 @@ namespace User.Infrastructure.Database;
 internal class UserDbContext(DbContextOptions<UserDbContext> options) : DbContext(options), IUnitOfWork
 {
     public DbSet<Domain.Entity.User> Users { get; init; }
+    public DbSet<Domain.Entity.RefreshToken> RefreshTokens { get; init; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
